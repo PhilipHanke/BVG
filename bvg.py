@@ -3,17 +3,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 #Jahreseinkommen/Gehalt
-'''
-salaries = pd.DataFrame('salary': np.arange(0,100))
 
-Person        gehalt1 gehalt2 gehalt3 ... gehalt40 beitrag1 beitrag2 beitrag3 ... beitrag40 pension41                       kapital 
-1              0                            40 000                                          = kapital*umwandlungssatz       
-2              0                            0
-3
-4                                           200000
-5                                           200000
-
-'''
 
 # Objekt model
 # Beinhaltet: vier Beitragssätze (vier Altersstufen), Zinssatz, Umwandlungssatz
@@ -64,6 +54,7 @@ def pensionCapital(contributions, model):
 
 
 def pension(model, salary):
+    #Berechnet die jährliche Pension (Kapital x Umwandlungssatz)
     umwandlungssatz = model[5]
     pension = pensionCapital(contributions(model, salary), model) * umwandlungssatz
     return int(pension)
@@ -78,8 +69,8 @@ def BVGModel(model):
         for beta in range(0, 5000, 100):
             salary = [alpha + beta * year if (alpha+beta*year) > 0 else 1 for year in range(0,40)]
             for i in range(0, 15):
-                salary.append(pension(model, salary))
-            coverage = pension(model, salary) / salary[39]
+                salary.append(pension(model, salary))           # Fügt dem Einkommen noch 15 Jahre Pension hinzu
+            coverage = pension(model, salary) / salary[39]      # Berechnet den Deckungsgrad (Pension in Prozent des letzten Gehalts)
             salary.append(round(coverage, 4))
             allSalaries.append(salary)
             alphas.append(alpha)
@@ -131,7 +122,7 @@ collectionOfModels = [
 
 BVGModel(legalminimum)
 
-#plt.show()
+plt.show()
 
 
 
@@ -140,39 +131,6 @@ BVGModel(legalminimum)
 #endSalaryAndCoverage = [[salary[1], salary[4]] for salary in summary]
 
 
-'''
-        lifetimeearnings = ( ((alpha+beta*40)-alpha)/2 + alpha*40)
-        incomes.append([alpha, beta, lifetimeearnings])
-'''
-
-
-'''
-1000 Personen: 
-10x10 Biographien (Kombinationen aus alpha und beta)
-
-Für jede Person gibt es 10 unterschiedliche Kassenmodelle (rate)
-
-Kassenmodelle: Verzinsung, Beiträge (Prozent der versicherten Summe), Umwandlungssatz
-
-Resultat:
-
-Person  alpha   beta    Beitragsrate    Liftetimecontributions                         Pensionsleistung
-        0       0       1%              Summe der Beiträge pro Jahr, verzinst         Lifetimecontributions x Umwandlungssatz
-                                                                                    ... pro Umwandlungssatz (10 verschiedene)
-                                        ... pro Zinsrate (10 verschiedene)                   
-        0       0       2%
-                        ...
-        0       0       10% (10 verschiedene)
-        ...
-        0       10
-        ...
-        10     1
-        ...
-        10     10
-
-
-Beiträge pro Jahr abhängig von Alter!!
-'''
 
 
 
