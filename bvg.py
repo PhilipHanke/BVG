@@ -2,8 +2,6 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 
-#Jahreseinkommen/Gehalt
-
 
 # Objekt model
 # Beinhaltet: vier Beitragssätze (vier Altersstufen), Zinssatz, Umwandlungssatz
@@ -92,20 +90,10 @@ def BVGModel(model):
 
     # Pandas-DataFrame zur graphischen Darstellung
     df = pd.DataFrame({'endsalary': endSalaries, 'coverage':coverages, 'alpha':alphas, 'beta':betas})
-    
-    #plt.scatter(df.endsalary, df.coverage)
-    #plt.title(model)
 
     print(df[df.coverage > 0.16])
     print(df[df.beta == 0])
-    #print(df.endsalary, df.coverage, df.alpha, df.beta)
 
-    #for i, label in enumerate(df.alpha): 
-     #   plt.text(df.endsalary[i], df.coverage[i], df.alpha)
-
-    #plt.text(df.endsalary, df.coverage, df.alpha)
-    #plt.savefig(str(model)+'.jpg')
-    #plt.show()
     return df
 
 collectionOfModels = [
@@ -117,25 +105,7 @@ collectionOfModels = [
     [0.07, 0.10, 0.15, 0.18, 0.15, 0.18]
 ]
 
-#for model in collectionOfModels:
-#    BVGModel(model)
 
 BVGModel(legalminimum)
 
 plt.show()
-
-
-
-
-# Nur Endgehalt und Deckungsgrad
-#endSalaryAndCoverage = [[salary[1], salary[4]] for salary in summary]
-
-
-
-
-
-#Berechnet die Versicherungsabdeckung für jedes Einkommen
-
-
-
-#Berechne Lebenseinkommen pro Person mit allen Kombinationen aus alpha und beta
